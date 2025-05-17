@@ -913,21 +913,26 @@ int main(int argc, char* argv[]) {
 		}
 
 		// TODO: don't do this every loop, we really shouldn't need to.
-		if (VROverlay()->IsDashboardVisible()) {
-			if (!overlay_was_open) {
-				fmt::print("Dashboard open, pausing detection.\n");
-			}
-			overlay_was_open = true;
+		//if (VROverlay()->IsDashboardVisible()) {
+		//	if (!overlay_was_open) {
+		//		fmt::print("Dashboard open, pausing detection.\n");
+		//	}
+		//	overlay_was_open = true;
 
 			// we should still be updating the action state, to get DigitalActions while the dashboard is open.
-			VRInput()->UpdateActionState(&trackers.actionSet, sizeof(VRActiveActionSet_t), 1);
-		} else {
-			if (overlay_was_open) {
-				fmt::print("Dashboard closed, re-enabling tracker detection.\n");
-			}
-			overlay_was_open = false;
-			trackers.Detect(just_connected, enable_hmd);
-		}
+		//	VRInput()->UpdateActionState(&trackers.actionSet, sizeof(VRActiveActionSet_t), 1);
+		//} else {
+		//	if (overlay_was_open) {
+		//		fmt::print("Dashboard closed, re-enabling tracker detection.\n");
+		//	}
+		//	overlay_was_open = false;
+		//	trackers.Detect(just_connected, enable_hmd);
+		//}
+		
+  	    // Dashboard pause removed:
+ 	    // Always update input state and run detection regardless of dashboard
+	     VRInput()->UpdateActionState(&trackers.actionSet, sizeof(VRActiveActionSet_t), 1);
+	     trackers.Detect(just_connected, enable_hmd);
 
 		// TODO: rename these actions as appropriate, perhaps log them?
 		trackers.HandleDigitalActionBool(calibration_action, { "reset" });
